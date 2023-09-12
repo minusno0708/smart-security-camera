@@ -1,3 +1,6 @@
 <template>
-    <h1>Hello Nuxt</h1>
+    <h1>Home</h1>
+    <div>
+        <NuxtLink to="/camera">Camera</NuxtLink>
+    </div>
 </template>
