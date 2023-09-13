@@ -1,5 +1,15 @@
 version: '3'
 services:
+  detect_api:
+    build: 
+      context: ./detect_api
+      dockerfile: Dockerfile
+    volumes:
+      - ./detect_api:/app
+    tty: true
+    ports:
+      - 8000:8000
+
   db:
     image: postgres:14-alpine
     ports:
