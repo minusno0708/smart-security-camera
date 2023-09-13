@@ -1,5 +1,5 @@
-defmodule ServerWeb.PageController do
-  use ServerWeb, :controller
+defmodule SecurityCameraServerWeb.PageController do
+  use SecurityCameraServerWeb, :controller
 
   def home(conn, _params) do
     # The home page is often custom made,

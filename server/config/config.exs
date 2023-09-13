@@ -7,18 +7,18 @@
 # General application configuration
 import Config
 
-config :server,
-  ecto_repos: [Server.Repo]
+config :security_camera_server,
+  ecto_repos: [SecurityCameraServer.Repo]
 
 # Configures the endpoint
-config :server, ServerWeb.Endpoint,
+config :security_camera_server, SecurityCameraServerWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [
-    formats: [html: ServerWeb.ErrorHTML, json: ServerWeb.ErrorJSON],
+    formats: [html: SecurityCameraServerWeb.ErrorHTML, json: SecurityCameraServerWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: Server.PubSub,
-  live_view: [signing_salt: "fBitkUrf"]
+  pubsub_server: SecurityCameraServer.PubSub,
+  live_view: [signing_salt: "kzkgCOMD"]
 
 # Configures the mailer
 #
@@ -27,7 +27,7 @@ config :server, ServerWeb.Endpoint,
 #
 # For production it's recommended to configure a different adapter
 # at the `config/runtime.exs`.
-config :server, Server.Mailer, adapter: Swoosh.Adapters.Local
+config :security_camera_server, SecurityCameraServer.Mailer, adapter: Swoosh.Adapters.Local
 
 # Configure esbuild (the version is required)
 config :esbuild,

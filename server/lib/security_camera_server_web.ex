@@ -1,12 +1,12 @@
-defmodule ServerWeb do
+defmodule SecurityCameraServerWeb do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, components, channels, and so on.
 
   This can be used in your application as:
 
-      use ServerWeb, :controller
-      use ServerWeb, :html
+      use SecurityCameraServerWeb, :controller
+      use SecurityCameraServerWeb, :html
 
   The definitions below will be executed for every controller,
   component, etc, so keep them short and clean, focused
@@ -40,10 +40,10 @@ defmodule ServerWeb do
     quote do
       use Phoenix.Controller,
         formats: [:html, :json],
-        layouts: [html: ServerWeb.Layouts]
+        layouts: [html: SecurityCameraServerWeb.Layouts]
 
       import Plug.Conn
-      import ServerWeb.Gettext
+      import SecurityCameraServerWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -52,7 +52,7 @@ defmodule ServerWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {ServerWeb.Layouts, :app}
+        layout: {SecurityCameraServerWeb.Layouts, :app}
 
       unquote(html_helpers())
     end
@@ -84,8 +84,8 @@ defmodule ServerWeb do
       # HTML escaping functionality
       import Phoenix.HTML
       # Core UI components and translation
-      import ServerWeb.CoreComponents
-      import ServerWeb.Gettext
+      import SecurityCameraServerWeb.CoreComponents
+      import SecurityCameraServerWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
@@ -98,9 +98,9 @@ defmodule ServerWeb do
   def verified_routes do
     quote do
       use Phoenix.VerifiedRoutes,
-        endpoint: ServerWeb.Endpoint,
-        router: ServerWeb.Router,
-        statics: ServerWeb.static_paths()
+        endpoint: SecurityCameraServerWeb.Endpoint,
+        router: SecurityCameraServerWeb.Router,
+        statics: SecurityCameraServerWeb.static_paths()
     end
   end
 
