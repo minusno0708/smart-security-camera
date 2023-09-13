@@ -1,5 +1,5 @@
-defmodule ServerWeb.PageControllerTest do
-  use ServerWeb.ConnCase
+defmodule SecurityCameraServerWeb.PageControllerTest do
+  use SecurityCameraServerWeb.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")

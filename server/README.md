@@ -1,4 +1,4 @@
-# Server
+# SecurityCameraServer
 
 To start your Phoenix server:
 

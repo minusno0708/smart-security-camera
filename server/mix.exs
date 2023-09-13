@@ -1,9 +1,9 @@
-defmodule Server.MixProject do
+defmodule SecurityCameraServer.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :server,
+      app: :security_camera_server,
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -18,7 +18,7 @@ defmodule Server.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Server.Application, []},
+      mod: {SecurityCameraServer.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end
