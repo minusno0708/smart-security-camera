@@ -1,5 +1,7 @@
 FROM node:20.6-buster-slim
 
-WORKDIR /app
+WORKDIR /client
 
-COPY . .
+COPY . /client
+
+CMD ["npm", "run", "dev"]
