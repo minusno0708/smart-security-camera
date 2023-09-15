@@ -48,4 +48,8 @@ defmodule SecurityCameraServerWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug SecurityCameraServerWeb.Router
+
+  socket "/socket", SecurityCameraServerWeb.StreamSocket,
+    websocket: true,
+    longpoll: false
 end
