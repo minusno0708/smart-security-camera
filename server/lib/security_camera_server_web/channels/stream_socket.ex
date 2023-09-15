@@ -10,7 +10,7 @@ defmodule SecurityCameraServerWeb.StreamSocket do
   # Uncomment the following line to define a "room:*" topic
   # pointing to the `SecurityCameraServerWeb.RoomChannel`:
   #
-  # channel "room:*", SecurityCameraServerWeb.RoomChannel
+  channel "camera:*", SecurityCameraServerWeb.CameraChannel
   #
   # To create a channel file, use the mix task:
   #
