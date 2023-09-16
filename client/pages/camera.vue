@@ -10,6 +10,7 @@ export default {
     name: 'CameraStreaming',
     data() {
         return {
+            video: null,
             ws: null,
         }
     },
@@ -19,14 +20,14 @@ export default {
     },
     methods: {
         setupCamera() {
-            const video = this.$refs.videoRef;
+            this.video = this.$refs.videoRef;
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({ 
                     video: true,
                     audio: false,
                  }).then(stream => {
-                    video.srcObject = stream;
-                    video.play();
+                    this.video.srcObject = stream;
+                    this.video.play();
                 }).catch(error => {
                     console.error("カメラにアクセスできませんでした:", error);
                 });
