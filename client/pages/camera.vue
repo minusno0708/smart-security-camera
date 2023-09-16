@@ -2,6 +2,7 @@
     <div>
         <h1>Camera Streaming</h1>
         <video ref="videoRef" autoplay></video>
+        <canvas ref="canvasRef"></canvas>
     </div>
 </template>
 
@@ -17,6 +18,7 @@ export default {
     mounted() {
         this.setupCamera();
         this.setupWebSocket();
+        //this.sendFrame();
     },
     methods: {
         setupCamera() {
@@ -39,6 +41,15 @@ export default {
             this.ws = new WebSocket("ws://localhost:4000/socket/websocket");
             this.ws.onopen = () => {
                 console.log("WebSocketに接続しました。");
+
+                const request = {
+                    topic: "camera:lobby",
+                    ref: 1,
+                    payload: {
+                    },
+                    event: "phx.join"
+                };
+                this.ws.send(JSON.stringify(request));
             };
             this.ws.onmessage = event => {
                 console.log("メッセージを受信しました。", event.data);
@@ -47,6 +58,22 @@ export default {
                 console.log("WebSocketを切断しました。");
             };
         },
+        /*
+        sendFrame() {
+            setInterval(() => {                
+                const request = {
+                    topic: "camera:lobby",
+                    ref: 1,
+                    payload: {
+                    },
+                    event: "phx.join"
+                };
+
+                if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+                    this.ws.send(JSON.stringify(request));
+                }
+            }, 100);
+        },*/
     }
 }
 </script>
