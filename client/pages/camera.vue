@@ -8,8 +8,14 @@
 <script>
 export default {
     name: 'CameraStreaming',
+    data() {
+        return {
+            ws: null,
+        }
+    },
     mounted() {
         this.setupCamera();
+        this.setupWebSocket();
     },
     methods: {
         setupCamera() {
@@ -17,7 +23,7 @@ export default {
             if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 navigator.mediaDevices.getUserMedia({ 
                     video: true,
-                    audio: true,
+                    audio: false,
                  }).then(stream => {
                     video.srcObject = stream;
                     video.play();
@@ -27,7 +33,19 @@ export default {
             } else {
                 console.warn("お使いのブラウザにサポートされていません。");
             }
-        }
+        },
+        setupWebSocket() {
+            this.ws = new WebSocket("ws://localhost:4000/socket/websocket");
+            this.ws.onopen = () => {
+                console.log("WebSocketに接続しました。");
+            };
+            this.ws.onmessage = event => {
+                console.log("メッセージを受信しました。", event.data);
+            };
+            this.ws.onclose = () => {
+                console.log("WebSocketを切断しました。");
+            };
+        },
     }
 }
 </script>
