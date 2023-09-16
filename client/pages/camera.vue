@@ -18,7 +18,7 @@ export default {
     mounted() {
         this.setupCamera();
         this.setupWebSocket();
-        //this.sendFrame();
+        this.sendFrame();
     },
     methods: {
         setupCamera() {
@@ -47,7 +47,7 @@ export default {
                     ref: 1,
                     payload: {
                     },
-                    event: "phx.join"
+                    event: "phx_join"
                 };
                 this.ws.send(JSON.stringify(request));
             };
@@ -58,22 +58,22 @@ export default {
                 console.log("WebSocketを切断しました。");
             };
         },
-        /*
         sendFrame() {
             setInterval(() => {                
                 const request = {
                     topic: "camera:lobby",
                     ref: 1,
                     payload: {
+                        message: "Hello Server"
                     },
-                    event: "phx.join"
+                    event: "ping"
                 };
 
                 if (this.ws && this.ws.readyState === WebSocket.OPEN) {
                     this.ws.send(JSON.stringify(request));
                 }
             }, 100);
-        },*/
+        },
     }
 }
 </script>
