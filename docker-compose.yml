@@ -5,10 +5,11 @@ services:
       context: ./client
       dockerfile: Dockerfile
     volumes:
-      - ./client:/app
+      - ./client:/client
     tty: true
     ports:
       - 3000:3000
+      - 24678:24678
     depends_on:
       - server
     environment:
