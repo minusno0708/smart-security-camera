@@ -59,7 +59,18 @@ export default {
             };
         },
         sendFrame() {
-            setInterval(() => {                
+            const canvas = this.$refs.canvasRef;
+            this.video.addEventListener('loadedmetadata', () => {
+                canvas.width = this.video.videoWidth;
+                canvas.height = this.video.videoHeight;
+            });
+
+            const ctx = canvas.getContext('2d');
+
+            setInterval(() => {   
+                ctx.drawImage(this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
+                const frameData = canvas.toDataURL('image/jpeg');
+
                 const request = {
                     topic: "camera:lobby",
                     ref: 1,
