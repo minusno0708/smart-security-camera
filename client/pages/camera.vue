@@ -75,7 +75,7 @@ export default {
                     topic: "camera:lobby",
                     ref: 1,
                     payload: {
-                        message: "Hello Server"
+                        message: frameData
                     },
                     event: "ping"
                 };
