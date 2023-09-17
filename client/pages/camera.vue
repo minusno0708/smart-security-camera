@@ -3,6 +3,7 @@
         <h1>Camera Streaming</h1>
         <video ref="videoRef" autoplay></video>
         <canvas ref="canvasRef"></canvas>
+        <NuxtLink to="/">Home</NuxtLink>
     </div>
 </template>
 
