@@ -78,7 +78,7 @@ export default {
                     payload: {
                         message: frameData
                     },
-                    event: "ping"
+                    event: "shout"
                 };
 
                 if (this.ws && this.ws.readyState === WebSocket.OPEN) {
