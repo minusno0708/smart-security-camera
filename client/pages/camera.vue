@@ -44,7 +44,7 @@ export default {
                 console.log("WebSocketに接続しました。");
 
                 const request = {
-                    topic: "camera:lobby",
+                    topic: "camera:123",
                     ref: 1,
                     payload: {
                     },
@@ -73,7 +73,7 @@ export default {
                 const frameData = canvas.toDataURL('image/jpeg');
 
                 const request = {
-                    topic: "camera:lobby",
+                    topic: "camera:123",
                     ref: 1,
                     payload: {
                         message: frameData
