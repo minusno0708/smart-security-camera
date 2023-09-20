@@ -8,7 +8,8 @@
 
 
 <script setup>
-import { ref, onMounted } from 'vue';
+const route = useRoute();
+const camera_id = route.params.id;
 
 const frame = ref(null);
 const ws = ref(null);
@@ -25,16 +26,16 @@ onMounted(() => {
 const setupWebSocket = () => {
     ws.value = new WebSocket("ws://localhost:4000/socket/websocket");
     ws.value.onopen = () => {
-        console.log("WebSocketに接続しました。");
-
         const request = {
-            topic: "camera:123",
+            topic: `camera:${camera_id}`,
             ref: 1,
             payload: {
             },
             event: "phx_join"
         };
         ws.value.send(JSON.stringify(request));
+
+        console.log("WebSocketに接続しました。");
     };
     ws.value.onclose = () => {
         console.log("WebSocketを切断しました。");
