@@ -4,7 +4,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "Welcome to Detect API"}
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
