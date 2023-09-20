@@ -1,13 +1,20 @@
 <template>
-    <div>
-        <h1>Camera Streaming</h1>
-        <video ref="videoRef" autoplay></video>
-        <canvas ref="canvasRef" style="display: none"></canvas>
-        <NuxtLink to="/">Home</NuxtLink>
-    </div>
+    <h1>Camera Streaming</h1>
+
+    <p>
+    <input v-model="channel_id">
+    <button @click="connectSocket">Connect</button>
+    </p>
+
+    <video ref="videoRef" autoplay></video>
+    <canvas ref="canvasRef" style="display: none"></canvas>
+
+    <p><NuxtLink to="/">Home</NuxtLink></p>
 </template>
 
 <script setup>
+const channel_id = ref('')
+
 const video = ref(null);
 const ws = ref(null);
 
@@ -16,8 +23,6 @@ const canvasRef = ref(null);
 
 onMounted(() => {
     setupCamera();
-    setupWebSocket();
-    sendFrame();
 });
 
 const setupCamera = () => {
@@ -37,13 +42,18 @@ const setupCamera = () => {
     }
 }
 
+const connectSocket = () => {
+    setupWebSocket();
+    sendFrame();
+}   
+
 const setupWebSocket = () => {
     ws.value = new WebSocket("ws://localhost:4000/socket/websocket");
     ws.value.onopen = () => {
         console.log("WebSocketに接続しました。");
 
         const request = {
-            topic: "camera:123",
+            topic: `camera:${channel_id.value}`,
             ref: 1,
             payload: {
             },
@@ -73,7 +83,7 @@ const sendFrame = () => {
         const frameData = canvas.toDataURL('image/jpeg');
 
         const request = {
-            topic: "camera:123",
+            topic: `camera:${channel_id.value}`,
             ref: 1,
             payload: {
                 message: frameData
