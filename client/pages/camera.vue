@@ -66,9 +66,6 @@ const setupWebSocket = () => {
         };
         ws.value.send(JSON.stringify(request));
     };
-    ws.value.onmessage = event => {
-        console.log("メッセージを受信しました。", event.data);
-    };
     ws.value.onclose = () => {
         console.log("WebSocketを切断しました。");
     };
