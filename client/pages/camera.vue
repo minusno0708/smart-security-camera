@@ -29,6 +29,12 @@ onMounted(() => {
     sendFrame();
 });
 
+onBeforeUnmount(() => {
+    if (ws.value) {
+        ws.value.close();
+    }
+});
+
 const setupCamera = () => {
     video.value = videoRef.value;
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
