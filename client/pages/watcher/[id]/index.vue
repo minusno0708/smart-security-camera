@@ -10,17 +10,19 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-const frame = ref(new Image());
+const frame = ref(null);
 const ws = ref(null);
 const canvasRef = ref(null);
 
 onMounted(() => {
+    frame.value = new Image();
+
     setupWebSocket();
     recieveImage();
     displayFrame();
 });
 
-const setupWebSocket() {
+const setupWebSocket = () => {
     ws.value = new WebSocket("ws://localhost:4000/socket/websocket");
     ws.value.onopen = () => {
         console.log("WebSocketに接続しました。");
@@ -39,7 +41,7 @@ const setupWebSocket() {
     };
 }
 
-const recieveImage() {
+const recieveImage = () => {
     ws.value.onmessage = event => {
         //console.log("メッセージを受信しました。", event.data);
 
@@ -51,7 +53,7 @@ const recieveImage() {
     };
 }
 
-const displayFrame() {
+const displayFrame = () => {
     const canvas = canvasRef.value;
     const ctx = canvas.getContext('2d');
 
