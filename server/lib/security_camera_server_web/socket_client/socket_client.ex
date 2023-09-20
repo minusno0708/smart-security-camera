@@ -14,4 +14,8 @@ defmodule SecurityCameraServerWeb.SocketClient do
     IO.puts "Sending #{type} frame with payload: #{msg}"
     {:reply, frame, state}
   end
+
+  def send_message(pid, message) do
+    WebSockex.cast(pid, {:send, {:text, message}})
+  end
 end
