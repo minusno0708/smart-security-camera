@@ -2,7 +2,7 @@
     <h1>Camera Streaming</h1>
 
     <p>
-    Channlel: {{ channel_id }}
+    Channel: {{ channel_id }}
     <button @click="idCopy">Copy</button>
     </p>
 

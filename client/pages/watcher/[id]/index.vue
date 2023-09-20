@@ -1,15 +1,17 @@
 <template>
-    <div>
-        <h1>Video Watching</h1>
-        <canvas ref="canvasRef"></canvas>
-        <NuxtLink to="/">Home</NuxtLink>
-    </div>
+    <h1>Video Watching</h1>
+
+    <p>Channel: {{ channel_id }}</p>
+
+    <canvas ref="canvasRef"></canvas>
+    <NuxtLink to="/">Home</NuxtLink>
+    
 </template>
 
 
 <script setup>
 const route = useRoute();
-const camera_id = route.params.id;
+const channel_id = route.params.id;
 
 const frame = ref(null);
 const ws = ref(null);
@@ -28,7 +30,7 @@ const setupWebSocket = () => {
     ws.value = new WebSocket("ws://localhost:4000/socket/websocket");
     ws.value.onopen = () => {
         const request = {
-            topic: `camera:${camera_id}`,
+            topic: `camera:${channel_id}`,
             ref: 1,
             payload: {
             },
@@ -72,7 +74,7 @@ const keepConnection = () => {
         console.log("Connection is alive.");
 
         const request = {
-            topic: `camera:${camera_id}`,
+            topic: `camera:${channel_id}`,
             ref: 1,
             payload: {},
             event: "ping"
