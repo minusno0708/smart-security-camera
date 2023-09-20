@@ -7,60 +7,58 @@
 </template>
 
 
-<script>
-export default {
-    name: 'VideoWatching',
-    data() {
-        return {
-            frame: new Image(),
-            ws: null,
+<script setup>
+import { ref, onMounted } from 'vue';
+
+const frame = ref(new Image());
+const ws = ref(null);
+const canvasRef = ref(null);
+
+onMounted(() => {
+    setupWebSocket();
+    recieveImage();
+    displayFrame();
+});
+
+const setupWebSocket() {
+    ws.value = new WebSocket("ws://localhost:4000/socket/websocket");
+    ws.value.onopen = () => {
+        console.log("WebSocketに接続しました。");
+
+        const request = {
+            topic: "camera:123",
+            ref: 1,
+            payload: {
+            },
+            event: "phx_join"
+        };
+        ws.value.send(JSON.stringify(request));
+    };
+    ws.value.onclose = () => {
+        console.log("WebSocketを切断しました。");
+    };
+}
+
+const recieveImage() {
+    ws.value.onmessage = event => {
+        //console.log("メッセージを受信しました。", event.data);
+
+        try {
+            frame.value.src = JSON.parse(event.data).payload.message;
+        } catch (err) {
+            console.warn("受信データをJSONとしてパースできませんでした。");
         }
-    },
-    mounted() {
-        this.setupWebSocket();
-        this.recieveImage();
-        this.displayFrame();
-    },
-    methods: {
-        setupWebSocket() {
-            this.ws = new WebSocket("ws://localhost:4000/socket/websocket");
-            this.ws.onopen = () => {
-                console.log("WebSocketに接続しました。");
+    };
+}
 
-                const request = {
-                    topic: "camera:123",
-                    ref: 1,
-                    payload: {
-                    },
-                    event: "phx_join"
-                };
-                this.ws.send(JSON.stringify(request));
-            };
-            this.ws.onclose = () => {
-                console.log("WebSocketを切断しました。");
-            };
-        },
-        recieveImage() {
-            this.ws.onmessage = event => {
-                //console.log("メッセージを受信しました。", event.data);
+const displayFrame() {
+    const canvas = canvasRef.value;
+    const ctx = canvas.getContext('2d');
 
-                try {
-                    this.frame.src = JSON.parse(event.data).payload.message;
-                } catch (err) {
-                    console.warn("受信データをJSONとしてパースできませんでした。");
-                }
-            };
-        },
-        displayFrame() {
-            const canvas = this.$refs.canvasRef;
-            const ctx = canvas.getContext('2d');
-
-            this.frame.onload = () => {
-                canvas.width = this.frame.width;
-                canvas.height = this.frame.height;
-                ctx.drawImage(this.frame, 0, 0, this.frame.width, this.frame.height);
-            };
-        },
-    }
+    frame.value.onload = () => {
+        canvas.width = frame.value.width;
+        canvas.height = frame.value.height;
+        ctx.drawImage(frame.value, 0, 0, frame.value.width, frame.value.height);
+    };
 }
 </script>
