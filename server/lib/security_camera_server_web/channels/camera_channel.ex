@@ -2,9 +2,9 @@ defmodule SecurityCameraServerWeb.CameraChannel do
   use SecurityCameraServerWeb, :channel
 
   @impl true
-  def join("camera:lobby", payload, socket) do
+  def join("camera:"  <> room_id, payload, socket) do
     if authorized?(payload) do
-      {:ok, socket}
+      {:ok, socket |> assign(:room_id, room_id)}
     else
       {:error, %{reason: "unauthorized"}}
     end
