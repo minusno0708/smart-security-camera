@@ -21,6 +21,7 @@ onMounted(() => {
     setupWebSocket();
     recieveImage();
     displayFrame();
+    keepConnection();
 });
 
 const setupWebSocket = () => {
@@ -63,5 +64,23 @@ const displayFrame = () => {
         canvas.height = frame.value.height;
         ctx.drawImage(frame.value, 0, 0, frame.value.width, frame.value.height);
     };
+}
+
+const keepConnection = () => {
+    // socketの切断を防ぐために、定期的にpingを送る
+    setInterval(() => {
+        console.log("Connection is alive.");
+
+        const request = {
+            topic: `camera:${camera_id}`,
+            ref: 1,
+            payload: {},
+            event: "ping"
+        };
+
+        if (ws.value && ws.value.readyState === WebSocket.OPEN) {
+            ws.value.send(JSON.stringify(request));
+        }
+    }, 30000);
 }
 </script>
