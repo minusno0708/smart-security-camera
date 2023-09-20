@@ -1,7 +1,10 @@
 <template>
     <h1>Camera Streaming</h1>
 
-    <p>Channlel: {{ channel_id }}</p>
+    <p>
+    Channlel: {{ channel_id }}
+    <button @click="idCopy">Copy</button>
+    </p>
 
     <video ref="videoRef" autoplay></video>
     <canvas ref="canvasRef" style="display: none"></canvas>
@@ -91,5 +94,9 @@ const sendFrame = () => {
             ws.value.send(JSON.stringify(request));
         }
     }, 100);
+}
+
+const idCopy = () => {
+    navigator.clipboard.writeText(channel_id.value);
 }
 </script>
