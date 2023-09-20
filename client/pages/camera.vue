@@ -1,10 +1,7 @@
 <template>
     <h1>Camera Streaming</h1>
 
-    <p>
-    <input v-model="channel_id">
-    <button @click="connectSocket">Connect</button>
-    </p>
+    <p>Channlel: {{ channel_id }}</p>
 
     <video ref="videoRef" autoplay></video>
     <canvas ref="canvasRef" style="display: none"></canvas>
@@ -13,7 +10,9 @@
 </template>
 
 <script setup>
-const channel_id = ref('')
+import { v4 as uuidv4 } from 'uuid'
+
+const channel_id = ref(uuidv4());
 
 const video = ref(null);
 const ws = ref(null);
@@ -23,6 +22,8 @@ const canvasRef = ref(null);
 
 onMounted(() => {
     setupCamera();
+    setupWebSocket();
+    sendFrame();
 });
 
 const setupCamera = () => {
@@ -41,11 +42,6 @@ const setupCamera = () => {
         console.warn("お使いのブラウザにサポートされていません。");
     }
 }
-
-const connectSocket = () => {
-    setupWebSocket();
-    sendFrame();
-}   
 
 const setupWebSocket = () => {
     ws.value = new WebSocket("ws://localhost:4000/socket/websocket");
