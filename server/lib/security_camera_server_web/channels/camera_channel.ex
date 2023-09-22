@@ -32,7 +32,15 @@ defmodule SecurityCameraServerWeb.CameraChannel do
   def handle_in("connect_api", payload, socket) do
     IO.puts("////////////////////////////////")
 
-    #{:ok, pid} = SocketClient.start_link("")
+    case SocketClient.start_link("") do
+      {:ok, pid} ->
+        IO.puts("pid:")
+        IO.inspect(pid)
+      {:error, reason} ->
+        IO.puts("error:")
+        IO.inspect(reason)
+    end
+
     {:reply, {:ok, payload}, socket}
   end
 

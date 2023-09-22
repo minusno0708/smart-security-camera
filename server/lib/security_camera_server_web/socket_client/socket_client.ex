@@ -2,7 +2,7 @@ defmodule SecurityCameraServerWeb.SocketClient do
   use WebSockex
 
   def start_link(state) do
-    WebSockex.start_link("ws://localhost:8000/ws", __MODULE__, state)
+    WebSockex.start_link("ws://detect_api:8000/ws", __MODULE__, state)
   end
 
   def handle_frame({type, msg}, state) do

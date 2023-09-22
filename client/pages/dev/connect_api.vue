@@ -12,6 +12,12 @@ onMounted(() => {
     setupWebSocket();
 });
 
+onBeforeUnmount(() => {
+    if (ws.value) {
+        ws.value.close();
+    }
+});
+
 const setupWebSocket = () => {
     ws.value = new WebSocket("ws://localhost:4000/socket/websocket");
     ws.value.onopen = () => {
