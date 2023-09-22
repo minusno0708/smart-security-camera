@@ -1,9 +1,12 @@
 <template>
     <h1>API Connection</h1>
+    <button @click="sendMessage">Send</button>
 </template>
 
 <script setup>
 const ws = ref(null);
+
+const channel_id = ref("1");
 
 onMounted(() => {
     setupWebSocket();
@@ -23,8 +26,28 @@ const setupWebSocket = () => {
         };
         ws.value.send(JSON.stringify(request));
     };
+    ws.value.onmessage = event => {
+        console.log("メッセージを受信しました。", event.data);
+    };
     ws.value.onclose = () => {
         console.log("WebSocketを切断しました。");
     };
+}
+
+const sendMessage = () => {
+    const request = {
+        topic: `camera:${channel_id.value}`,
+        ref: 1,
+        payload: {
+            body: {
+                message: "Connection Test"
+            }
+        },
+        event: "connect_api"
+    };
+
+    if (ws.value && ws.value.readyState === WebSocket.OPEN) {
+        ws.value.send(JSON.stringify(request));
+    }
 }
 </script>
