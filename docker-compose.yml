@@ -16,6 +16,10 @@ services:
       - HOST=0.0.0.0
       - port=3000
       - CHOKIDAR_USEPOLLING=true
+    command: >
+      bash -c "
+      npm install &&
+      npm run dev"
 
   server:
     build:
@@ -29,7 +33,10 @@ services:
     depends_on:
       - db
     command: >
-      bash -c "mix ecto.create &&
+      bash -c "
+      mix deps.get &&
+      mix deps.compile &&
+      mix ecto.create &&
       mix ecto.migrate &&
       mix phx.server"
 
