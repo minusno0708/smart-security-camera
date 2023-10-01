@@ -1,6 +1,8 @@
 defmodule SecurityCameraServerWeb.CameraChannel do
   use SecurityCameraServerWeb, :channel
 
+  alias SecurityCameraServerWeb.SocketClient
+
   @impl true
   def join("camera:"  <> room_id, payload, socket) do
     if authorized?(payload) do
@@ -14,6 +16,7 @@ defmodule SecurityCameraServerWeb.CameraChannel do
   # by sending replies to requests from the client
   @impl true
   def handle_in("ping", payload, socket) do
+    IO.puts("ping")
     {:reply, {:ok, payload}, socket}
   end
 
@@ -23,6 +26,22 @@ defmodule SecurityCameraServerWeb.CameraChannel do
   def handle_in("shout", payload, socket) do
     broadcast(socket, "shout", payload)
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_in("connect_api", payload, socket) do
+    IO.puts("////////////////////////////////")
+
+    case SocketClient.start_link("") do
+      {:ok, pid} ->
+        IO.puts("pid:")
+        IO.inspect(pid)
+      {:error, reason} ->
+        IO.puts("error:")
+        IO.inspect(reason)
+    end
+
+    {:reply, {:ok, payload}, socket}
   end
 
   # Add authorization logic here as required.
