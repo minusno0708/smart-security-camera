@@ -1,15 +1,18 @@
 <template>
     <h1>API Connection</h1>
     <button @click="sendMessage">Send</button>
+    <p>{{ message }}</p>
 </template>
 
 <script setup>
 const ws = ref(null);
 
 const channel_id = ref("1");
+const message = ref("Not Recieved")
 
 onMounted(() => {
     setupWebSocket();
+    recieveMessage();
 });
 
 onBeforeUnmount(() => {
@@ -32,9 +35,6 @@ const setupWebSocket = () => {
         };
         ws.value.send(JSON.stringify(request));
     };
-    ws.value.onmessage = event => {
-        console.log("メッセージを受信しました。", event.data);
-    };
     ws.value.onclose = () => {
         console.log("WebSocketを切断しました。");
     };
@@ -55,5 +55,17 @@ const sendMessage = () => {
     if (ws.value && ws.value.readyState === WebSocket.OPEN) {
         ws.value.send(JSON.stringify(request));
     }
+}
+
+const recieveMessage = () => {
+    ws.value.onmessage = event => {
+        console.log("メッセージを受信しました。", event.data);
+
+        try {
+            message.value = JSON.parse(event.data).payload.response.body.message;
+        } catch (err) {
+            console.warn("受信データをJSONとしてパースできませんでした。");
+        }
+    };
 }
 </script>
