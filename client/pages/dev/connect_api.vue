@@ -1,7 +1,9 @@
 <template>
     <h1>API Connection</h1>
     <button @click="sendMessage">Send</button>
-    <p>{{ message }}</p>
+
+    <p>Status: {{ status }}</p>
+    <p>Message: {{ message }}</p>
 </template>
 
 <script setup>
@@ -9,6 +11,7 @@ const ws = ref(null);
 
 const channel_id = ref("1");
 const message = ref("Not Recieved")
+const status = ref("Not Connected");
 
 onMounted(() => {
     setupWebSocket();
@@ -34,9 +37,12 @@ const setupWebSocket = () => {
             event: "phx_join"
         };
         ws.value.send(JSON.stringify(request));
+
+        status.value = "Connected";
     };
     ws.value.onclose = () => {
         console.log("WebSocketを切断しました。");
+        status.value = "Not Connected";
     };
 }
 
