@@ -33,10 +33,11 @@ defmodule SecurityCameraServerWeb.CameraChannel do
     case SocketClient.start_link("") do
       {:ok, pid} ->
         IO.puts("pid:")
-        IO.inspect(pid)
+        IO.puts(inspect(pid))
 
         {:reply, {:ok, payload
         |> Map.put("body", %{"message" => "Connection success"})
+        |> Map.put("pid", inspect(pid))
         }, socket}
       {:error, reason} ->
         IO.puts("error:")

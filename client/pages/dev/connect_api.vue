@@ -3,6 +3,7 @@
     <button @click="sendMessage">Send</button>
 
     <p>Status: {{ status }}</p>
+    <p>PID: {{ pid }}</p>
     <p>Message: {{ message }}</p>
 </template>
 
@@ -10,6 +11,8 @@
 const ws = ref(null);
 
 const channel_id = ref("1");
+const pid = ref("")
+
 const message = ref("Not Recieved")
 const status = ref("Not Connected");
 
@@ -69,6 +72,7 @@ const recieveMessage = () => {
 
         try {
             message.value = JSON.parse(event.data).payload.response.body.message;
+            pid.value = JSON.parse(event.data).payload.response.pid;
         } catch (err) {
             console.warn("受信データをJSONとしてパースできませんでした。");
         }
