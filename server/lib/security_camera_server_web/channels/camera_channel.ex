@@ -30,18 +30,18 @@ defmodule SecurityCameraServerWeb.CameraChannel do
 
   @impl true
   def handle_in("connect_api", payload, socket) do
-    IO.puts("////////////////////////////////")
-
     case SocketClient.start_link("") do
       {:ok, pid} ->
         IO.puts("pid:")
         IO.inspect(pid)
+        payload = put_in(payload["body"]["message"], "Connection success")
+        {:reply, {:ok, payload}, socket}
       {:error, reason} ->
         IO.puts("error:")
         IO.inspect(reason)
+        payload = put_in(payload["body"]["message"], "Connection error")
+        {:reply, {:ok, payload}, socket}
     end
-
-    {:reply, {:ok, payload}, socket}
   end
 
   # Add authorization logic here as required.

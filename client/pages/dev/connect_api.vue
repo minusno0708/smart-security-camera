@@ -52,7 +52,7 @@ const sendMessage = () => {
         ref: 1,
         payload: {
             body: {
-                message: "Connection Test"
+                message: "Connection Request"
             }
         },
         event: "connect_api"
