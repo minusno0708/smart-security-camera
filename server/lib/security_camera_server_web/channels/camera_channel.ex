@@ -36,8 +36,28 @@ defmodule SecurityCameraServerWeb.CameraChannel do
         IO.puts(inspect(pid))
 
         {:reply, {:ok, payload
-        |> Map.put("body", %{"message" => "Connection success"})
+        |> Map.put("body", %{"message" => "Get PID"})
         |> Map.put("pid", inspect(pid))
+        }, socket}
+      {:error, reason} ->
+        IO.puts("error:")
+        IO.inspect(reason)
+
+        {:reply, {:ok, payload
+        |> Map.put("body", %{"message" => "Connection error"})
+        }, socket}
+    end
+  end
+
+  @impl true
+  def handle_in("send_api", payload, socket) do
+    case SocketClient.start_link("") do
+      {:ok, pid} ->
+        IO.puts("pid:")
+        IO.puts(inspect(pid))
+
+        {:reply, {:ok, payload
+        |> Map.put("body", %{"message" => "Connection success"})
         }, socket}
       {:error, reason} ->
         IO.puts("error:")

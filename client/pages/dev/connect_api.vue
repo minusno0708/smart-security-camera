@@ -74,7 +74,7 @@ const sendMessage = () => {
                 message: "Connection Request"
             }
         },
-        event: "connect_api"
+        event: "send_api"
     };
 
     if (ws.value && ws.value.readyState === WebSocket.OPEN) {
@@ -88,7 +88,10 @@ const recieveMessage = () => {
 
         try {
             message.value = JSON.parse(event.data).payload.response.body.message;
-            pid.value = JSON.parse(event.data).payload.response.pid;
+
+            if (JSON.parse(event.data).payload.response.pid != undefined) {
+                pid.value = JSON.parse(event.data).payload.response.pid;
+            }
         } catch (err) {
             console.warn("受信データをJSONとしてパースできませんでした。");
         }
