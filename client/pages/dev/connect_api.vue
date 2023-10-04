@@ -42,11 +42,27 @@ const setupWebSocket = () => {
         ws.value.send(JSON.stringify(request));
 
         status.value = "Connected";
+
+        connectApi();
     };
     ws.value.onclose = () => {
         console.log("WebSocketを切断しました。");
         status.value = "Not Connected";
     };
+}
+
+const connectApi = () => {
+    const request = {
+        topic: `camera:${channel_id.value}`,
+        ref: 1,
+        payload: {
+        },
+        event: "connect_api"
+    };
+
+    if (ws.value && ws.value.readyState === WebSocket.OPEN) {
+        ws.value.send(JSON.stringify(request));
+    }
 }
 
 const sendMessage = () => {
