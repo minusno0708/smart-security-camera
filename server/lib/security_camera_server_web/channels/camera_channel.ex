@@ -32,12 +32,12 @@ defmodule SecurityCameraServerWeb.CameraChannel do
   def handle_in("connect_api", payload, socket) do
     case SocketClient.start_link("") do
       {:ok, pid} ->
-        IO.puts("pid:")
-        IO.puts(inspect(pid))
 
         {:reply, {:ok, payload
         |> Map.put("body", %{"message" => "Get PID"})
-        |> Map.put("pid", inspect(pid))
+        |> Map.put("pid", pid
+          |> :erlang.pid_to_list()
+        )
         }, socket}
       {:error, reason} ->
         IO.puts("error:")
@@ -51,10 +51,16 @@ defmodule SecurityCameraServerWeb.CameraChannel do
 
   @impl true
   def handle_in("send_api", payload, socket) do
+    pid = payload["pid"]
+      |> :erlang.list_to_pid()
+
+    IO.puts("input pid:")
+    IO.inspect(pid)
+
     case SocketClient.start_link("") do
       {:ok, pid} ->
         IO.puts("pid:")
-        IO.puts(inspect(pid))
+        IO.inspect(pid)
 
         {:reply, {:ok, payload
         |> Map.put("body", %{"message" => "Connection success"})

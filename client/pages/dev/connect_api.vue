@@ -72,7 +72,8 @@ const sendMessage = () => {
         payload: {
             body: {
                 message: "Connection Request"
-            }
+            },
+            pid: pid.value
         },
         event: "send_api"
     };
