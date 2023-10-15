@@ -3,12 +3,12 @@
     <button @click="changeStatus">Connect</button><br>
 
     <input v-on:change="uploadImage" type="file" name="file" accept="image/jpeg, image/png"><br>
-    <img v-if="image" :src="image" alt="Uploaded preview" width="600"><br>
+    <img v-if="image" :src="image" alt="Uploaded preview" width="500"><br>
     <p>Image:{{ image }}</p>
     
     <button @click="sendMessage">Send</button>
     <p>Status:{{ status }}</p>
-    <p>{{ message }}</p>
+    <p>Message:{{ message }}</p>
 </template>
 
 <script setup>
@@ -50,8 +50,8 @@ const setupWebSocket = () => {
 
 const sendMessage = () => {
     try {
-        const request = "Hello, Detect API";
-        ws.value.send(JSON.stringify(request));
+        const frame = image.value;
+        ws.value.send(JSON.stringify(frame));
     } catch (error) {
         console.log(error);
     }
