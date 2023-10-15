@@ -45,6 +45,7 @@ const setupWebSocket = () => {
     };
     ws.value.onclose = () => {
         console.log("WebSocketを切断しました。");
+        status.value = 0;
     };
 }
 
