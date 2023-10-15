@@ -1,6 +1,11 @@
 <template>
     <h1>API Connection</h1>
-    <button @click="changeStatus">Connect</button>
+    <button @click="changeStatus">Connect</button><br>
+
+    <input v-on:change="uploadImage" type="file" name="file" accept="image/jpeg, image/png"><br>
+    <img v-if="image" :src="image" alt="Uploaded preview"><br>
+    <p>Image:{{ image }}</p>
+    
     <button @click="sendMessage">Send</button>
     <p>Status:{{ status }}</p>
     <p>{{ message }}</p>
@@ -12,6 +17,7 @@ const ws = ref(null);
 const message = ref("");
 
 const status = ref(0);
+const image = ref(null);
 
 const changeStatus = () => {
     if (status.value == 0) {
@@ -50,4 +56,25 @@ const sendMessage = () => {
         console.log(error);
     }
 }
+
+const uploadImage = (e) => {
+    let files = e.target.files;
+    e.preventDefault(); 
+
+    if(files && files.length > 0){
+        getFileAsBase64(files[0])
+        .then((imgDataBase64)=>{
+            image.value = imgDataBase64;
+        });
+    } else {
+        console.log("error")
+    }
+}
+
+const getFileAsBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+})
 </script>
