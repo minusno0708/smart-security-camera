@@ -3,7 +3,7 @@
     <button @click="changeStatus">Connect</button><br>
 
     <input v-on:change="uploadImage" type="file" name="file" accept="image/jpeg, image/png"><br>
-    <img v-if="image" :src="image" alt="Uploaded preview" width="500"><br>
+    <img v-if="image" :src="image" alt="Uploaded preview" height="300"><br>
     <p>Image:{{ image }}</p>
     
     <button @click="sendMessage">Send</button>
@@ -54,6 +54,7 @@ const sendMessage = () => {
         ws.value.send(JSON.stringify(frame));
     } catch (error) {
         console.log(error);
+        message.value = error;
     }
 }
 
