@@ -51,7 +51,7 @@ const setupWebSocket = () => {
 const sendMessage = () => {
     try {
         const frame = image.value;
-        ws.value.send(JSON.stringify(frame));
+        ws.value.send(frame);
     } catch (error) {
         console.log(error);
         message.value = error;
