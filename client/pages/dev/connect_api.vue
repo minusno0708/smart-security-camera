@@ -3,7 +3,7 @@
     <button @click="changeStatus">Connect</button><br>
 
     <input v-on:change="uploadImage" type="file" name="file" accept="image/jpeg, image/png"><br>
-    <img v-if="image" :src="image" alt="Uploaded preview"><br>
+    <img v-if="image" :src="image" alt="Uploaded preview" width="600"><br>
     <p>Image:{{ image }}</p>
     
     <button @click="sendMessage">Send</button>
