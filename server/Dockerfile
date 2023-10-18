@@ -9,7 +9,7 @@ FROM elixir:1.15.4-slim
 WORKDIR /app
 
 COPY . .
-COPY --from=model-import yolov8n.onnx .
+COPY --from=model-import yolov8n.onnx ./models
 
 RUN apt-get update && apt-get install -y make gcc inotify-tools && \
     mix local.hex --force && \

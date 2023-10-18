@@ -27,6 +27,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./server:/app
+      - detect_models:/app/models
     tty: true
     ports:
       - 4000:4000
@@ -58,3 +59,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
   
+volumes:
+  detect_models:
