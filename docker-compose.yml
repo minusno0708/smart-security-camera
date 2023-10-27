@@ -26,6 +26,7 @@ services:
       context: ./server
       dockerfile: Dockerfile
     volumes:
+      - ./server/models:/app/models
       - ./server:/app
     tty: true
     ports:
